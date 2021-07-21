@@ -83,7 +83,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="M_GPIO_Base.cpp|M_GPIO_Drv.cpp|M_NTL_v01.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="M_Valves.cpp|M_GPIO_Base.cpp|M_GPIO_Drv.cpp|M_NTL_v01.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

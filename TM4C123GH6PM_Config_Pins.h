@@ -15,8 +15,8 @@
  * PB2 |p47|DI      |Sw4_MonitorMode_PB2     |J2p2 |
  * PB7 |p4 |DI      |Sw6_PwrSense_PB7        |J2p6 |
  * PE0 |p9 |DI      |Sw5_Mute/Reset Alert_PE0|J2p3 |
- * PF0 |p28|DI      |Sw2_Wakeup_PF0          |J2p4 |<--
- * PF4 |p5 |DI      |Sw1_Mode_PF4            |J4p10|<--
+ * PF0 |p28|DI      |Sw2_Wakeup_PF0          |J2p4 |
+ * PF4 |p5 |DI      |Sw1_Mode_PF4            |J4p10|
  * ------------------------------------------------|
  * PB1 |p46|DO      |Drv_Valve_Bolus_PB1     |J1p4 |
  * PB6 |p1 |DO      |Drv_Valve_Exhaust_PB6   |J2p7 |
@@ -65,18 +65,6 @@
 #include "driverlib/rom_map.h"
 #include "driverlib/sysctl.h"
 
-/*
-// Make this header have a C binding when compiling with C++ compiler.
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-*/
-
-//-----------------------------------------------------------------------------
-//extern void TM4C123GH6PM_Config_Pins(void);
-//extern void PinoutSet(void);
-//-----------------------------------------------------------------------------
 
 //!!! Uncomment the "#define ..." line if unit testing is reqd
 #define Unit_Test_Mode
@@ -88,7 +76,6 @@ extern "C"
 #endif
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-enum en_ov_spl_t {enOvSplx2=2, enOvSplx4=4, enOvSplx8=8, enOvSplx16=16, enOvSplx64=64};
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class cl_tm4c123gh6pm_pins{
@@ -96,14 +83,6 @@ private:
 protected:
     uint32_t aui32ADC_Buf[8];
     uint32_t ui32ADC_Value_avg;
-
-/*
-    //--- Analog inputs
-    uint16_t digitize_Ain0_PE3();  //MCUp6
-    uint16_t digitize_Ain1_PE2();  //MCUp7
-    uint16_t digitize_Ain10_PB4(); //MCUp58
-    uint16_t digitize_Ain8_PE5();  //MCUp60
-*/
 
     //--- Digital inputs
     bool read_DI_PB0(); //MCUp45
@@ -148,35 +127,11 @@ protected:
     void drv_H_PD7(); //MCUp10
     void drv_L_PD7(); //MCUp10
 
-   //--- I2C (Inter-integrated Circuit)
-
-
-
-    //--- PWM output(Pulse width modulation)
-
-
-    //--- SSI (Synchronous Serial Interface)
-
-
-    //--- UART Serial Communications
-
-
-
 public:
     cl_tm4c123gh6pm_pins(); //Ctor
-    //--- ADC
-    void set_HW_OverSampling(en_ov_spl_t enUsr_OvSplCnt); //enOvSplx2,4,8,16,64
-
 
 };
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-/*
-#ifdef __cplusplus
-}
-#endif
-*/
 
 
 #endif /* TM4C123GH6PM_CONFIG_PINS_H_ */

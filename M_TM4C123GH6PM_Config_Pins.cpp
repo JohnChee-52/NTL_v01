@@ -15,8 +15,8 @@
  * PB2 |p47|DI      |Sw4_MonitorMode_PB2     |J2p2 |
  * PB7 |p4 |DI      |Sw6_PwrSense_PB7        |J2p6 |
  * PE0 |p9 |DI      |Sw5_Mute/Reset Alert_PE0|J2p3 |
- * PF0 |p28|DI      |Sw2_Wakeup_PF0          |J2p4 |<--
- * PF4 |p5 |DI      |Sw1_Mode_PF4            |J4p10|<--
+ * PF0 |p28|DI      |Sw2_Wakeup_PF0          |J2p4 |
+ * PF4 |p5 |DI      |Sw1_Mode_PF4            |J4p10|
  * ------------------------------------------------|
  * PB1 |p46|DO      |Drv_Valve_Bolus_PB1     |J1p4 |
  * PB6 |p1 |DO      |Drv_Valve_Exhaust_PB6   |J2p7 |
@@ -57,53 +57,8 @@
 int main(void){
     SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //config for 50MHz clock
 
-    cl_tm4c123gh6pm_pins MCU;
+    cl_tm4c123gh6pm_pins oMCU;
 
-/*
-    //----- Test Analog Inputs
-
-    uint16_t Data_ZeroLevel[4];
-    uint16_t Data_MidLevel[4];
-    uint16_t Data_MaxLevel[4];
-    //Use controlled voltage source to test. Apply voltages and step over the instruction.
-
-    //-- PE3 |p6 |AIN0    |BatteryVoltage_PE3      |J3p9 |
-    //Apply 0.1V to J3p9
-    Data_ZeroLevel[0] = MCU.digitize_Ain0_PE3(); //Data_ZeroLevel[0]=0x7C
-    //Apply 1.65V to J3p9
-    Data_MidLevel[0] = MCU.digitize_Ain0_PE3();  //Data_MidLevel[0]=0x7FF
-    //Apply 3.0V to J3p9
-    Data_MaxLevel[0] = MCU.digitize_Ain0_PE3();  //Data_MaxLevel[0]=0xE8B
-
-    //-- PE2 |p7 |AIN1    |ClogPressure_PE2        |J3p8 |
-    //Apply 0.1V to J3p8
-    Data_ZeroLevel[1] = MCU.digitize_Ain1_PE2(); //Data_ZeroLevel[1]=0x7C
-    //Apply 1.65V to J3p8
-    Data_MidLevel[1] = MCU.digitize_Ain1_PE2();  //Data_MidLevel[1]=0x7FF
-    //Apply 3.0V to J3p8
-    Data_MaxLevel[1] = MCU.digitize_Ain1_PE2();  //Data_MaxLevel[1]=0xE8B
-
-    //-- PB4 |p58|AIN10   |BackPressure_PB4        |J1p7 |
-    //Apply 0.1V to J1p7
-    Data_ZeroLevel[2] = MCU.digitize_Ain10_PB4(); //Data_ZeroLevel[2]=0x7C
-    //Apply 1.65V to J1p7
-    Data_MidLevel[2] = MCU.digitize_Ain10_PB4();  //Data_MidLevel[2]=0x7FF
-    //Apply 3.0V to J1p7
-    Data_MaxLevel[2] = MCU.digitize_Ain10_PB4();  //Data_MaxLevel[2]=0xE8B
-
-    //-- PE5 |p60|AIN8    |ChamberPressure_PE5     |J1p6 |
-    //Apply 0.1V to J1p6
-    Data_ZeroLevel[3] = MCU.digitize_Ain8_PE5(); //Data_ZeroLevel[3]=0x7C
-    //Apply 1.65V to J1p6
-    Data_MidLevel[3] = MCU.digitize_Ain8_PE5();  //Data_MidLevel[3]=0x7FF
-    //Apply 3.0V to J1p6
-    Data_MaxLevel[3] = MCU.digitize_Ain8_PE5();  //Data_MaxLevel[3]=0xE8B
-
-    //----- Just to avoid warning "never used"
-    Data_ZeroLevel[0]++;
-    Data_MidLevel[0]++;
-    Data_MaxLevel[0]++;
-*/
 
     //----- Test Digital Inputs
     //Set a H and L voltage to the input pin and check the level read
@@ -111,36 +66,36 @@ int main(void){
     bool bLevel; //Level seen by MCU
 
     //-- PB0 |p45|Sw3_Pulse_PB0           |J1p3 |
-    bLevel = MCU.read_DI_PB0(); //H = when input voltage is H
-    bLevel = MCU.read_DI_PB0(); //L = when input voltage is L
-    bLevel = MCU.read_DI_PB0(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PB0(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PB0(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PB0(); //H = when input voltage is H
 
     //-- PB2 |p47|Sw4_MonitorMode_PB2     |J2p2 |
-    bLevel = MCU.read_DI_PB2(); //H = when input voltage is H
-    bLevel = MCU.read_DI_PB2(); //L = when input voltage is L
-    bLevel = MCU.read_DI_PB2(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PB2(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PB2(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PB2(); //H = when input voltage is H
 
     //-- PB7 |p4 |Sw6_PwrSense_PB7        |J2p6 |
-    bLevel = MCU.read_DI_PB7(); //H = when input voltage is H
-    bLevel = MCU.read_DI_PB7(); //L = when input voltage is L
-    bLevel = MCU.read_DI_PB7(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PB7(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PB7(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PB7(); //H = when input voltage is H
 
     //-- PE0 |p9 |Sw5_Mute/Reset Alert_PE0|J2p3 |
-    bLevel = MCU.read_DI_PE0(); //H = when input voltage is H
-    bLevel = MCU.read_DI_PE0(); //L = when input voltage is L
-    bLevel = MCU.read_DI_PE0(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PE0(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PE0(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PE0(); //H = when input voltage is H
 
     //-- PF0 |p28|Sw2_Wakeup_PF0          |J4p10|
 //    while(1){
-    bLevel = MCU.read_DI_PF0(); //H = when input voltage is H
-    bLevel = MCU.read_DI_PF0(); //L = when input voltage is L
-    bLevel = MCU.read_DI_PF0(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PF0(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PF0(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PF0(); //H = when input voltage is H
 //    }
 
     //-- PF4 |p5 |Sw1_Mode_PF4             |J2p4 |
-    bLevel = MCU.read_DI_PF4(); //H = when input voltage is H
-    bLevel = MCU.read_DI_PF4(); //L = when input voltage is L
-    bLevel = MCU.read_DI_PF4(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PF4(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PF4(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PF4(); //H = when input voltage is H
 
     //----- Just to avoid warning "never used"
     if(bLevel);
@@ -149,68 +104,52 @@ int main(void){
     //Use Oscilloscope to view the High and low states at the various pins of the MCU
 
     //-- PB1 |p46|Drv_Valve_Bolus_PB1     |J1p4 |
-    MCU.drv_L_PB1(); //L
-    MCU.drv_H_PB1(); //H
-    MCU.drv_L_PB1(); //L
+    oMCU.drv_L_PB1(); //L
+    oMCU.drv_H_PB1(); //H
+    oMCU.drv_L_PB1(); //L
 
     //-- PB6 |p1 |Drv_Valve_Exhaust_PB6   |J2p7 |
-    MCU.drv_L_PB6(); //L
-    MCU.drv_H_PB6(); //H
-    MCU.drv_L_PB6(); //L
+    oMCU.drv_L_PB6(); //L
+    oMCU.drv_H_PB6(); //H
+    oMCU.drv_L_PB6(); //L
 
     //-- PE1 |p8 |Drv_Valve_TestBolus_PE1 |J3p7 |
-    MCU.drv_L_PE1(); //L
-    MCU.drv_H_PE1(); //H
-    MCU.drv_L_PE1(); //L
+    oMCU.drv_L_PE1(); //L
+    oMCU.drv_H_PE1(); //H
+    oMCU.drv_L_PE1(); //L
 
     //-- PC4 |p16|LED_Send_Char_PC4       |J4p4 |
-    MCU.drv_L_PC4(); //L
-    MCU.drv_H_PC4(); //H
-    MCU.drv_L_PC4(); //L
+    oMCU.drv_L_PC4(); //L
+    oMCU.drv_H_PC4(); //H
+    oMCU.drv_L_PC4(); //L
 
     //-- PC5 |p15|LED_Rcv_Char_PC5        |J4p5 |
-    MCU.drv_L_PC5(); //L
-    MCU.drv_H_PC5(); //H
-    MCU.drv_L_PC5(); //L
+    oMCU.drv_L_PC5(); //L
+    oMCU.drv_H_PC5(); //H
+    oMCU.drv_L_PC5(); //L
 
     //-- PF1 |p29|Drv_LED1_Red_PF1        |J3p10|
-    MCU.drv_L_PF1(); //L
-    MCU.drv_H_PF1(); //H
-    MCU.drv_L_PF1(); //L
+    oMCU.drv_L_PF1(); //L
+    oMCU.drv_H_PF1(); //H
+    oMCU.drv_L_PF1(); //L
 
     //-- PF2 |p30|Drv_LED2_Blue_PF2       |J4p1 |
-    MCU.drv_L_PF2(); //L
-    MCU.drv_H_PF2(); //H
-    MCU.drv_L_PF2(); //L
+    oMCU.drv_L_PF2(); //L
+    oMCU.drv_H_PF2(); //H
+    oMCU.drv_L_PF2(); //L
 
     //-- PF3 |p31|Drv_LED3_Green_PF3      |J4p2 |
-    MCU.drv_L_PF3(); //L
-    MCU.drv_H_PF3(); //H
-    MCU.drv_L_PF3(); //L
+    oMCU.drv_L_PF3(); //L
+    oMCU.drv_H_PF3(); //H
+    oMCU.drv_L_PF3(); //L
 
     //-- PB5 |p57|Buzzer_PB5              |J1p2 |
-    MCU.drv_L_PB5(); //L
-//    while(1){
-    MCU.drv_H_PB5(); //H
-    MCU.drv_L_PB5(); //L
-//    }
-
-    //----- Test I2C (Inter-integrated Circuit)
+    oMCU.drv_L_PB5(); //L
+    oMCU.drv_H_PB5(); //H
+    oMCU.drv_L_PB5(); //L
 
 
-
-    //----- Test PWM output(Pulse width modulation)
-
-
-    //----- Test SSI (Synchronous Serial Interface)
-
-
-    //----- Test UART Serial Communications
-
-
-
-     while(1){
-
+    while(1){
     }
 }
 //=============================================================================

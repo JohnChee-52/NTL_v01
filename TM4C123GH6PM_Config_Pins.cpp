@@ -15,8 +15,8 @@
  * PB2 |p47|DI      |Sw4_MonitorMode_PB2     |J2p2 |
  * PB7 |p4 |DI      |Sw6_PwrSense_PB7        |J2p6 |
  * PE0 |p9 |DI      |Sw5_Mute/Reset Alert_PE0|J2p3 |
- * PF0 |p28|DI      |Sw2_Wakeup_PF0          |J2p4 |<--
- * PF4 |p5 |DI      |Sw1_Mode_PF4            |J4p10|<--
+ * PF0 |p28|DI      |Sw2_Wakeup_PF0          |J2p4 |
+ * PF4 |p5 |DI      |Sw1_Mode_PF4            |J4p10|
  * ------------------------------------------------|
  * PB1 |p46|DO      |Drv_Valve_Bolus_PB1     |J1p4 |
  * PB6 |p1 |DO      |Drv_Valve_Exhaust_PB6   |J2p7 |
@@ -50,7 +50,6 @@
  *  Created on: 15 Jul 2021
  *      Author: John Chee
  */
-
 
 #include "TM4C123GH6PM_Config_Pins.h"
 
@@ -174,25 +173,6 @@ cl_tm4c123gh6pm_pins::cl_tm4c123gh6pm_pins(){
 }
 //::cc-------------------------------------------------------------------------
 
-/*
-//--- Analog inputs
-void cl_tm4c123gh6pm_pins::set_HW_OverSampling(en_ov_spl_t enUsr_OvSplCnt){ //enOvSplx2,4,8,16,64
-    ADCHardwareOversampleConfigure(ADC0_BASE,enUsr_OvSplCnt);//set adc hardware averaging to 4 samples
-}
-//::---------------------------------------------------------------------------
-uint16_t cl_tm4c123gh6pm_pins::digitize_Ain0_PE3(){  //MCUp6
-    ADCIntClear(ADC0_BASE,0); //clear interrupt flag of ADC0 sequencer 0.
-    ADCProcessorTrigger(ADC0_BASE,0);//PE2 AIn1: trigger  conversion thru ADC0 sequencer 0
-    while(!ADCIntStatus(ADC0_BASE,0,false)){}; //wait for end of conversion
-    ADCSequenceDataGet(ADC0_BASE,0,&aui32ADC_Buf[0]); //get ADC data into 4 word array
-    ui32ADC_Value_avg=(aui32ADC_Buf[0]+aui32ADC_Buf[1] + 2)/4; //average in int arith with +0.5 to round off.
-    return (uint16_t)ui32ADC_Value_avg; //return averaged value of Ch1
-}
-//::---------------------------------------------------------------------------
-uint16_t cl_tm4c123gh6pm_base::digitize_Ain1_PE2(){  //MCUp7
-uint16_t cl_tm4c123gh6pm_base::digitize_Ain10_PB4(){ //MCUp58
-uint16_t cl_tm4c123gh6pm_base::digitize_Ain8_PE5(){  //MCUp60
-*/
 
 //----- Digital inputs
 //::---------------------------------------------------------------------------
