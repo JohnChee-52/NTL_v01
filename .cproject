@@ -84,7 +84,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="M_ADC.cpp|M_Valves.cpp|M_Sensors.cpp|M_NTL_v01.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="M_Valves.cpp|M_TM4C123GH6PM_Config_Pins.cpp|M_Switches.cpp|M_Sensors.cpp|M_Pump.cpp|M_ADC.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
