@@ -54,6 +54,8 @@
 #ifndef TM4C123GH6PM_CONFIG_PINS_H_
 #define TM4C123GH6PM_CONFIG_PINS_H_
 
+#include "Unit_Test_Mode.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 #include "inc/hw_gpio.h"
@@ -65,7 +67,7 @@
 #include "driverlib/rom_map.h"
 #include "driverlib/sysctl.h"
 
-
+/*
 //!!! Uncomment the "#define ..." line if unit testing is reqd
 //#define Unit_Test_Mode
 #undef Unit_Test_Mode
@@ -75,6 +77,7 @@
 #define protected public
 #endif
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+*/
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -88,7 +91,7 @@ protected:
     bool read_DI_PB0(); //MCUp45
     bool read_DI_PB2(); //MCUp47
     bool read_DI_PB7(); //MCUp4
-    bool read_DI_PE0(); //MCUp9
+    bool read_DI_PA4(); //MCUp9
     bool read_DI_PF0(); //MCUp28
     bool read_DI_PF4(); //MCUp5
     bool read_DI_PA5(); //MCUp22

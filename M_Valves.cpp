@@ -20,7 +20,7 @@
 #include "Valves.h"
 
 //=============================================================================
-int main(void){
+ int main(void){
     SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //config for 50MHz clock
 
     cl_valves oValve;

@@ -86,9 +86,9 @@ cl_tm4c123gh6pm_pins::cl_tm4c123gh6pm_pins(){
     MAP_GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_7); //PB7 |p4  |DI      |Sw6_PwrSense_PB7        |J2p6
     MAP_GPIOPadConfigSet(GPIO_PORTB_BASE, GPIO_PIN_7, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 
-    //-- Setup DI for PE0
-    MAP_GPIOPinTypeGPIOInput(GPIO_PORTE_BASE, GPIO_PIN_0); //PE0 |p9  |DI    |Sw5_Mute/Reset Alert_PE0  |J2p3
-    MAP_GPIOPadConfigSet(GPIO_PORTE_BASE, GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+    //-- Setup DI for PA4
+    MAP_GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_4); //PA4 |p9  |DI    |Sw5_Mute/Reset Alert_PA4  |J2p8
+    MAP_GPIOPadConfigSet(GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 
     //-- Setup DI for PF0
     //-- Unlock the Port Pin and Set the Commit Bit of Pin PF0
@@ -175,36 +175,56 @@ cl_tm4c123gh6pm_pins::cl_tm4c123gh6pm_pins(){
 
 
 //----- Digital inputs
+//-- DI_PB0
 //::---------------------------------------------------------------------------
 bool cl_tm4c123gh6pm_pins::read_DI_PB0(){ //MCUp45
    return ((GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_0) > 0)? true: false) ;
 }
 //::---------------------------------------------------------------------------
 
+//-- DI_PB2
+//::---------------------------------------------------------------------------
 bool cl_tm4c123gh6pm_pins::read_DI_PB2(){ //MCUp47
     return ((GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_2) > 0)? true: false) ;
 }
+//::---------------------------------------------------------------------------
+
+//-- DI_PB7
 //::---------------------------------------------------------------------------
 bool cl_tm4c123gh6pm_pins::read_DI_PB7(){ //MCUp4
     return ((GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_7) > 0)? true: false) ;
 }
 //::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::read_DI_PE0(){ //MCUp9
-    return ((GPIOPinRead(GPIO_PORTE_BASE, GPIO_PIN_0) > 0)? true: false) ;
+
+//-- DI_PA4
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::read_DI_PA4(){ //MCUp21
+    return ((GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_4) > 0)? true: false) ;
 }
+//::---------------------------------------------------------------------------
+
+//-- DI_PF0
 //::---------------------------------------------------------------------------
 bool cl_tm4c123gh6pm_pins::read_DI_PF0(){ //MCUp28
     return ((GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0) > 0)? true: false) ;
 }
 //::---------------------------------------------------------------------------
+
+//-- DI_PF4
+//::---------------------------------------------------------------------------
 bool cl_tm4c123gh6pm_pins::read_DI_PF4(){ //MCUp5
     return ((GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4) > 0)? true: false) ;
 }
+//::---------------------------------------------------------------------------
+
+//-- DI_PA5
 //::---------------------------------------------------------------------------
 bool cl_tm4c123gh6pm_pins::read_DI_PA5(){ //MCUp22
     return ((GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_5) > 0)? true: false) ;
 }
 //::---------------------------------------------------------------------------
+
+
 
 //----- Digital outputs
 //-- DO PB1

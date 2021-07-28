@@ -65,6 +65,7 @@ int main(void){
     // eg. use a switch
     bool bLevel; //Level seen by MCU
 
+
     //-- PB0 |p45|Sw3_Pulse_PB0           |J1p3 |
     bLevel = oMCU.read_DI_PB0(); //H = when input voltage is H
     bLevel = oMCU.read_DI_PB0(); //L = when input voltage is L
@@ -80,10 +81,10 @@ int main(void){
     bLevel = oMCU.read_DI_PB7(); //L = when input voltage is L
     bLevel = oMCU.read_DI_PB7(); //H = when input voltage is H
 
-    //-- PE0 |p9 |Sw5_Mute/Reset Alert_PE0|J2p3 |
-    bLevel = oMCU.read_DI_PE0(); //H = when input voltage is H
-    bLevel = oMCU.read_DI_PE0(); //L = when input voltage is L
-    bLevel = oMCU.read_DI_PE0(); //H = when input voltage is H
+    //-- PA4 |p21 |Sw5_Mute/Reset Alert_PE0|J2p8 |
+    bLevel = oMCU.read_DI_PA4(); //H = when input voltage is H
+    bLevel = oMCU.read_DI_PA4(); //L = when input voltage is L
+    bLevel = oMCU.read_DI_PA4(); //H = when input voltage is H
 
     //-- PF0 |p28|Sw2_Wakeup_PF0          |J4p10|
 //    while(1){

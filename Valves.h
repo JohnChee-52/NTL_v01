@@ -31,7 +31,6 @@ protected:
 public:
     cl_valves(); //Ctor
 
-private:
     //--- Bolus Valve
     void open_bolus_nc();
     void close_bolus_nc();
