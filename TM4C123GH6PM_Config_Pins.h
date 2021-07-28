@@ -99,36 +99,47 @@ protected:
     //--- Digital outputs
     void drv_H_PB1(); //MCUp46
     void drv_L_PB1(); //MCUp46
+    bool is_H_PB1(); //MCUp46
 
     void drv_H_PB6(); //MCUp1
     void drv_L_PB6(); //MCUp1
+    bool is_H_PB6(); //MCUp1
 
     void drv_H_PE1(); //MCUp8
     void drv_L_PE1(); //MCUp8
+    bool is_H_PE1(); //MCUp8
 
     void drv_H_PC4(); //MCUp16
     void drv_L_PC4(); //MCUp16
+    bool is_H_PC4(); //MCUp16
 
     void drv_H_PC5(); //MCUp15
     void drv_L_PC5(); //MCUp15
+    bool is_H_PC5(); //MCUp15
 
     void drv_H_PF1(); //MCUp29
     void drv_L_PF1(); //MCUp29
+    bool is_H_PF1(); //MCUp29
 
     void drv_H_PF2(); //MCUp30
     void drv_L_PF2(); //MCUp30
+    bool is_H_PF2(); //MCUp30
 
     void drv_H_PF3(); //MCUp31
     void drv_L_PF3(); //MCUp31
+    bool is_H_PF3(); //MCUp31
 
     void drv_H_PB5(); //MCUp57
     void drv_L_PB5(); //MCUp57
+    bool is_H_PB5(); //MCUp57
 
     void drv_H_PD6(); //MCUp53
     void drv_L_PD6(); //MCUp53
+    bool is_H_PD6(); //MCUp53
 
     void drv_H_PD7(); //MCUp10
     void drv_L_PD7(); //MCUp10
+    bool is_H_PD7(); //MCUp10
 
 public:
     cl_tm4c123gh6pm_pins(); //Ctor

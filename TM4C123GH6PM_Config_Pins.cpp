@@ -238,6 +238,53 @@ void cl_tm4c123gh6pm_pins::drv_L_PB1(){ //MCUp46
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_1, 0);
 }
 //::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PB1(){ //MCUp46
+    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_1);
+}
+//::---------------------------------------------------------------------------
+
+bool cl_tm4c123gh6pm_pins::is_H_PB6(){ //MCUp1
+    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_6);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PE1(){ //MCUp8
+    return GPIOPinRead(GPIO_PORTE_BASE, GPIO_PIN_1);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PC4(){ //MCUp16
+    return GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_4);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PC5(){ //MCUp15
+    return GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_5);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PF1(){ //MCUp29
+    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PF2(){ //MCUp30
+    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PF3(){ //MCUp31
+    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_3);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PB5(){ //MCUp57
+    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PD6(){ //MCUp53
+    return GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_6);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PD7(){ //MCUp10
+    return GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_7);
+}
+//::---------------------------------------------------------------------------
+
+
 
 //-- DO PB6
 //::---------------------------------------------------------------------------

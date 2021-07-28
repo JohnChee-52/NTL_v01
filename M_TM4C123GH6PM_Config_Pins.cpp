@@ -104,51 +104,74 @@ int main(void){
     //----- Test Digital Outputs
     //Use Oscilloscope to view the High and low states at the various pins of the MCU
 
+    bool bF_Level_H;
+
     //-- PB1 |p46|Drv_Valve_Bolus_PB1     |J1p4 |
     oMCU.drv_L_PB1(); //L
     oMCU.drv_H_PB1(); //H
+    bF_Level_H = oMCU.is_H_PB1(); //0x1
     oMCU.drv_L_PB1(); //L
+    bF_Level_H = oMCU.is_H_PB1(); //0x0
+
 
     //-- PB6 |p1 |Drv_Valve_Exhaust_PB6   |J2p7 |
     oMCU.drv_L_PB6(); //L
     oMCU.drv_H_PB6(); //H
+    bF_Level_H = oMCU.is_H_PB6(); //0x1
     oMCU.drv_L_PB6(); //L
+    bF_Level_H = oMCU.is_H_PB6(); //0x0
 
     //-- PE1 |p8 |Drv_Valve_TestBolus_PE1 |J3p7 |
     oMCU.drv_L_PE1(); //L
     oMCU.drv_H_PE1(); //H
+    bF_Level_H = oMCU.is_H_PE1(); //0x1
     oMCU.drv_L_PE1(); //L
+    bF_Level_H = oMCU.is_H_PE1(); //0x0
 
     //-- PC4 |p16|LED_Send_Char_PC4       |J4p4 |
     oMCU.drv_L_PC4(); //L
     oMCU.drv_H_PC4(); //H
+    bF_Level_H = oMCU.is_H_PC4(); //0x1
     oMCU.drv_L_PC4(); //L
+    bF_Level_H = oMCU.is_H_PC4(); //0x0
 
     //-- PC5 |p15|LED_Rcv_Char_PC5        |J4p5 |
     oMCU.drv_L_PC5(); //L
     oMCU.drv_H_PC5(); //H
+    bF_Level_H = oMCU.is_H_PC5(); //0x1
     oMCU.drv_L_PC5(); //L
+    bF_Level_H = oMCU.is_H_PC5(); //0x0
 
     //-- PF1 |p29|Drv_LED1_Red_PF1        |J3p10|
     oMCU.drv_L_PF1(); //L
     oMCU.drv_H_PF1(); //H
+    bF_Level_H = oMCU.is_H_PF1(); //0x1
     oMCU.drv_L_PF1(); //L
+    bF_Level_H = oMCU.is_H_PF1(); //0x0
 
     //-- PF2 |p30|Drv_LED2_Blue_PF2       |J4p1 |
     oMCU.drv_L_PF2(); //L
     oMCU.drv_H_PF2(); //H
+    bF_Level_H = oMCU.is_H_PF2(); //0x1
     oMCU.drv_L_PF2(); //L
+    bF_Level_H = oMCU.is_H_PF2(); //0x0
 
     //-- PF3 |p31|Drv_LED3_Green_PF3      |J4p2 |
     oMCU.drv_L_PF3(); //L
     oMCU.drv_H_PF3(); //H
+    bF_Level_H = oMCU.is_H_PF3(); //0x1
     oMCU.drv_L_PF3(); //L
+    bF_Level_H = oMCU.is_H_PF3(); //0x0
 
     //-- PB5 |p57|Buzzer_PB5              |J1p2 |
     oMCU.drv_L_PB5(); //L
     oMCU.drv_H_PB5(); //H
+    bF_Level_H = oMCU.is_H_PB5(); //0x1
     oMCU.drv_L_PB5(); //L
+    bF_Level_H = oMCU.is_H_PB5(); //0x0
 
+    //----- Just to avoid warning "never used"
+    if(bF_Level_H);
 
     while(1){
     }
