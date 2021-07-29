@@ -1,5 +1,15 @@
 /*
  * Timers.cpp
+ * Timer0 has been configured as a 64-bit periodic timer that runs
+ * continuously. The periodicity is programmable from microseconds to 60s.
+ * Typically, Timer0 will be used to generate 10 ms periodic interrupts,
+ * so that the timer’s ISR can run in “real time” (i.e. fast relative to
+ * human reflex).
+ * For an Interrupt Service Routine (ISR) to be served by an interrupt, it
+ * must have its ID defined in ISR_Register.h, and the ISR manager must
+ * register it during program initialisation in main().
+ *
+ * Note: In periodic mode, the 2nd period onwards is accurate in duration.
  *
  *  Created on: 28 Jul 2021
  *      Author: John Chee
@@ -8,8 +18,9 @@
 
 //::cc-------------------------------------------------------------------------
 cl_timer0::cl_timer0(){ //Ctor, One-Shot, 32-bit DnCnt; enable IRQ
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); //Enable Timer0nHW module
-    TimerConfigure(TIMER0_BASE,TIMER_CFG_PERIODIC); //Set Timer0 as 32-bit one-shot
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0); //Enable Timer0 HW module
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0)){}; //Wait for module to be ready
+    TimerConfigure(TIMER0_BASE,TIMER_CFG_PERIODIC); //Set Timer0 as 64-bit periodic
 
     ui32_Period_cnt = (SysCtlClockGet() * (uint64_t)(10)) / 1000; //Calc for 10ms
     TimerLoadSet(TIMER0_BASE, TIMER_A, (ui32_Period_cnt - 1));//Set timer0 to interrupt every 10ms

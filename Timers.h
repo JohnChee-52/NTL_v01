@@ -1,8 +1,14 @@
 /*
  * Timers.h
- * TimerO is set to be a periodic timer, typ 10ms period, for ISR servicing
- * The period may be adjusted, and interrupt response to end of period may
- * be eanbled or disabled.
+ * Timer0 has been configured as a 64-bit periodic timer that runs
+ * continuously. The periodicity is programmable from microseconds to 60s.
+ * Typically, Timer0 will be used to generate 10 ms periodic interrupts,
+ * so that the timer’s ISR can run in “real time” (i.e. fast relative to
+ * human reflex).
+ * For an Interrupt Service Routine (ISR) to be served by an interrupt, it
+ * must have its ID defined in ISR_Register.h, and the ISR manager must
+ * register it during program initialisation in main().
+ *
  * Note: In periodic mode, the 2nd period onwards is accurate in duration.
  *
  *  Created on: 28 Jul 2021
@@ -18,21 +24,6 @@
 #include "inc/tm4c123gh6pm.h"
 #include "driverlib/timer.h"
 #include "driverlib/interrupt.h"
-
-//#include "ISR_mgr.h"
-
-/*//.............................................................................
-extern "C" {
-interrupt void IRQ_Vector_Timer0();
-} //ISR Vectors; for tm4c123gh6pm startup file
-//.............................................................................
-
-//^^^^^------------------------------------------------------------------------
-interrupt void IRQ_Vector_Timer0(){//ISR Vector for tm4c123gh6pm startup file
-    cl_isr_mgr::dispatch_ISR(ID_Timer0);
-}
-//^^^^^------------------------------------------------------------------------
-*/
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
