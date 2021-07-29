@@ -55,10 +55,10 @@
 
 #include "ISR_mgr.h"
 
-//Note: cl_timer_isr, cl_switch_isr are dummy classes to test out cl_isr_mgr
 
 
 //TT----- Test-setup codes ----------------------------------------------------
+//Note: cl_timer_isr, cl_switch_isr are dummy classes to test out cl_isr_mgr
 
 extern "C" { //IRQ Vector to be declared in 2 parts in "tm4c123gh6pm_startup_ccs.c" file
 interrupt void IRQ_Vector_Timer0();
