@@ -26,7 +26,8 @@ cl_timer0::cl_timer0(){ //Ctor, One-Shot, 32-bit DnCnt; enable IRQ
     TimerLoadSet(TIMER0_BASE, TIMER_A, (ui32_Period_cnt - 1));//Set timer0 to interrupt every 10ms
     IntEnable(INT_TIMER0A);//NVIC setup to respond Timer0 interrupt
 
-    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT); //Allow Timer0 to accept interrupt
+    //Don't enable Timer0 interrupt so that it can be controlled in main()
+    //TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT); //Allow Timer0 to accept interrupt
 }
 //::cc-------------------------------------------------------------------------
 
