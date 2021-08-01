@@ -16,6 +16,23 @@
 
 //::cc-------------------------------------------------------------------------
 cl_pump::cl_pump(){ //Ctor
+
+}
+//::cc-------------------------------------------------------------------------
+
+//::---------------------------------------------------------------------------
+void cl_pump::turn_On(){
+    drv_H_PE4();
+}
+//::---------------------------------------------------------------------------
+void cl_pump::turn_Off(){
+    drv_L_PE4();
+}
+//::---------------------------------------------------------------------------
+
+/*
+//::cc-------------------------------------------------------------------------
+cl_pump::cl_pump(){ //Ctor
     //!---- this config is not needed when H-bridge is used, because  TM4C123gh6pm has configured it for PWM
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); //enable GPIO port E
     MAP_GPIOPinTypeGPIOInput(GPIO_PORTE_BASE, GPIO_PIN_4); //Overwrite prev config
@@ -34,4 +51,4 @@ void cl_pump::turn_Off(){
     GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_4, 0);//Drive to L
 }
 //::---------------------------------------------------------------------------
-
+*/

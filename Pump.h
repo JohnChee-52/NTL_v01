@@ -20,7 +20,7 @@
 
 
  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- class cl_pump /*: cl_tm4c123gh6pm_pins*/{ //exclude until receive H-drive IC
+ class cl_pump : cl_tm4c123gh6pm_pins{ //exclude until receive H-drive IC
  private:
  protected:
  public:
