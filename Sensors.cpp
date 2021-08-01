@@ -20,16 +20,19 @@
  * -   |-  |TS      |MCU_Temperature_TS      |-    |
  * ------------------------------------------------|
  *
- * Calibration:
+ * Calibration of pressure sensors:
  *  Typically done at 2 pressures: 0 mmHg (Atmospheric), 40 mmHg.
  *  The gradient & offset coefficients are derived using (A = adc counts):
  *      m = P40 / (A40 - A0);
  *      c = -(A0 * m);
  *  Pressure Pn is then found by calculating:
  *      Pn = m * An  +  c
+ *  Pressure Sensitivities:
+ *      MP3V5050GC6U = 54mv/kPa   10mV/1.38mmHg     1mmHg/7.25mV
+ *      MPXV5100DP   = 90mv/kPa   10mV/0.83mmHg     1mmHg/12mV
  *  Temperature oC of MCU IC:
  *      TEMP = 147.5 – ((75 * (VREFP – VREFN) * ADCVALUE) / 4096)
- * Note:
+* Note:
  *  Battery voltage is sensed via a voltage divider
  *  ADC precision error (on breadboard cct) is +- 0.1%
  *
@@ -42,10 +45,10 @@
 
 //..... Instantiate Static Variables ..........................................
 uint16_t cl_sensors::ui16_BattVolt_mV;
-uint16_t cl_sensors::ui16_ClogPressure_mmHg;
-uint16_t cl_sensors::ui16_BackPressure_mmHg;
-uint16_t cl_sensors::ui16_ChamberPressure_mmHg;
-uint16_t cl_sensors::ui16_CoughPressure_mmHg;
+int16_t cl_sensors::i16_ClogPressure_mmHg;
+int16_t cl_sensors::i16_BackPressure_mmHg;
+int16_t cl_sensors::i16_ChamberPressure_mmHg;
+int16_t cl_sensors::i16_CoughPressure_mmHg;
 uint16_t cl_sensors::ui16_MCU_Temperature_oCx10;
 //-- Calibration coefficients
 st_calib_t cl_sensors::st_ClogPressure;
@@ -98,32 +101,32 @@ uint16_t cl_sensors::sense_BattVolt_mV(){      // PE3 |p6 |J3p9
 
 //--- Sense Pressure
 //::---------------------------------------------------------------------------
-uint16_t cl_sensors::sense_ClogPress_mmHg(){   // PE2 |p7 |J3p8
+int16_t cl_sensors::sense_ClogPress_mmHg(){   // PE2 |p7 |J3p8
     digitise_Ain1_PE2_adc();
-    ui16_ClogPressure_mmHg = ((ui16_Ain1_PE2_adc * st_ClogPressure.ui16_m_coeff_x10k) / 10000)
+    i16_ClogPressure_mmHg = (((int16_t)ui16_Ain1_PE2_adc * st_ClogPressure.ui16_m_coeff_x10k) / 10000)
             - (st_ClogPressure.ui16_c_coeff_x100 / 100);
-     return ui16_ClogPressure_mmHg;
+     return i16_ClogPressure_mmHg;
 }
 //::---------------------------------------------------------------------------
-uint16_t cl_sensors::sense_BackPress_mmHg(){    // PB4 |p58|J1p7
+int16_t cl_sensors::sense_BackPress_mmHg(){    // PB4 |p58|J1p7
     digitise_Ain10_PB4_adc();
-    ui16_BackPressure_mmHg = ((ui16_Ain10_PB4_adc * st_BackPressure.ui16_m_coeff_x10k) / 10000)
+    i16_BackPressure_mmHg = (((int16_t)ui16_Ain10_PB4_adc * st_BackPressure.ui16_m_coeff_x10k) / 10000)
             - (st_BackPressure.ui16_c_coeff_x100 / 100);
-    return ui16_BackPressure_mmHg;
+    return i16_BackPressure_mmHg;
 }
 //::---------------------------------------------------------------------------
-uint16_t cl_sensors::sense_ChamberPress_mmHg(){ // PE5 |p60|J1p6
+int16_t cl_sensors::sense_ChamberPress_mmHg(){ // PE5 |p60|J1p6
     digitise_Ain8_PE5_adc();
-    ui16_ChamberPressure_mmHg = ((ui16_Ain8_PE5_adc * st_ChamberPressure.ui16_m_coeff_x10k) / 10000)
+    i16_ChamberPressure_mmHg = (((int16_t)ui16_Ain8_PE5_adc * st_ChamberPressure.ui16_m_coeff_x10k) / 10000)
             - (st_ChamberPressure.ui16_c_coeff_x100 / 100);
-    return ui16_ChamberPressure_mmHg;
+    return i16_ChamberPressure_mmHg;
 }
 //::---------------------------------------------------------------------------
-uint16_t cl_sensors::sense_CoughPress_mmHg(){   // PE0 |p9 |J2p3
+int16_t cl_sensors::sense_CoughPress_mmHg(){   // PE0 |p9 |J2p3
     digitise_Ain3_PE0_adc();
-    ui16_CoughPressure_mmHg = ((ui16_Ain3_PE0_adc * st_CoughPressure.ui16_m_coeff_x10k) / 10000)
+    i16_CoughPressure_mmHg = (((int16_t)ui16_Ain3_PE0_adc * st_CoughPressure.ui16_m_coeff_x10k) / 10000)
             - (st_CoughPressure.ui16_c_coeff_x100 / 100);
-    return ui16_CoughPressure_mmHg;
+    return i16_CoughPressure_mmHg;
 }
 //::---------------------------------------------------------------------------
 

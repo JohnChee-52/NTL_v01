@@ -20,13 +20,16 @@
  * -   |-  |TS      |MCU_Temperature_TS      |-    |
  * ------------------------------------------------|
  *
- * Calibration:
+ * Calibration of pressure sensors:
  *  Typically done at 2 pressures: 0 mmHg (Atmospheric), 40 mmHg.
  *  The gradient & offset coefficients are derived using (A = adc counts):
  *      m = P40 / (A40 - A0);
  *      c = -(A0 * m);
  *  Pressure Pn is then found by calculating:
  *      Pn = m * An  +  c
+ *  Pressure Sensitivities:
+ *      MP3V5050GC6U = 54mv/kPa   10mV/1.38mmHg     1mmHg/7.25mV
+ *      MPXV5100DP   = 90mv/kPa   10mV/0.83mmHg     1mmHg/12mV
  *  Temperature oC of MCU IC:
  *      TEMP = 147.5 – ((75 * (VREFP – VREFN) * ADCVALUE) / 4096)
  * Note:
@@ -80,12 +83,9 @@ int main(void){
     //-- Cough Pressure Sensor:
     u16_mmHg = oSensor.sense_CoughPress_mmHg();   //Pressure increased <-- PE0 |p9 |J2p3
 
-//while(1){
     //----- Test: Sense Temperature
     //MCU IC temperature:
     u16_oCx10 = oSensor.sense_MCU_temperature_oCx10(); //internally connected
-//}
-
 
     //----- Just to avoid warning "never used"
     u16_mV[9] ++;

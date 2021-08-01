@@ -20,17 +20,20 @@
  * -   |-  |TS      |MCU_Temperature_TS      |-    |
  * ------------------------------------------------|
  *
- * Calibration:
+ * Calibration of pressure sensors:
  *  Typically done at 2 pressures: 0 mmHg (Atmospheric), 40 mmHg.
  *  The gradient & offset coefficients are derived using (A = adc counts):
  *      m = P40 / (A40 - A0);
  *      c = -(A0 * m);
  *  Pressure Pn is then found by calculating:
  *      Pn = m * An  +  c
+ *  Pressure Sensitivities:
+ *      MP3V5050GC6U = 54mv/kPa   10mV/1.38mmHg     1mmHg/7.25mV
+ *      MPXV5100DP   = 90mv/kPa   10mV/0.83mmHg     1mmHg/12mV
  *  Temperature oC of MCU IC:
  *      TEMP = 147.5 – ((75 * (VREFP – VREFN) * ADCVALUE) / 4096)
  * Note:
- *  Battery voltage is sensed via a voltage divider
+ *  Battery voltage is sensed via a 50% voltage divider
  *  ADC precision error (on breadboard cct) is +- 0.1%
  *
  *
@@ -51,7 +54,7 @@ struct st_calib_t{
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class cl_sensors : cl_adc {
+class cl_sensors : public cl_adc {
 private:
     static uint32_t ui32_Adc_data[8]; //Raw data buf x4
     static uint32_t ui32_Adc_data_avg; //Averaged Raw data
@@ -67,10 +70,10 @@ public:
     static st_calib_t st_MCU_Temperature;
 
     static uint16_t ui16_BattVolt_mV;
-    static uint16_t ui16_ClogPressure_mmHg;
-    static uint16_t ui16_BackPressure_mmHg;
-    static uint16_t ui16_ChamberPressure_mmHg;
-    static uint16_t ui16_CoughPressure_mmHg;
+    static int16_t i16_ClogPressure_mmHg;
+    static int16_t i16_BackPressure_mmHg;
+    static int16_t i16_ChamberPressure_mmHg;
+    static int16_t i16_CoughPressure_mmHg;
     static uint16_t ui16_MCU_Temperature_oCx10;
 
     cl_sensors(); //Ctor
@@ -79,10 +82,10 @@ public:
     uint16_t sense_BattVolt_mV();       // PE3 |p6 |J3p9
 
     //--- Sense Pressure
-    uint16_t sense_ClogPress_mmHg();    // PE2 |p7 |J3p8
-    uint16_t sense_BackPress_mmHg();    // PB4 |p58|J1p7
-    uint16_t sense_ChamberPress_mmHg(); // PE5 |p60|J1p6
-    uint16_t sense_CoughPress_mmHg();   // PE0 |p9 |J2p3
+    int16_t sense_ClogPress_mmHg();    // PE2 |p7 |J3p8
+    int16_t sense_BackPress_mmHg();    // PB4 |p58|J1p7
+    int16_t sense_ChamberPress_mmHg(); // PE5 |p60|J1p6
+    int16_t sense_CoughPress_mmHg();   // PE0 |p9 |J2p3
 
     //--- Sense Temperature
     uint16_t sense_MCU_temperature_oCx10(); //internally connected
