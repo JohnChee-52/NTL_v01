@@ -43,8 +43,24 @@ cl_isr_timer0::cl_isr_timer0(){ //Ctor
 
 //::---------------------------------------------------------------------------
 void cl_isr_timer0::exec_isr(int iUsrID){
+    uint16_t ui16_Pressure_chamber_mmHg[5];
+
     TimerIntClear(TIMER0_BASE,TIMER_TIMA_TIMEOUT);//clear timer0A interrupt
     oLED_Dbg.on_Red();
+
+    oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
+
+/*
+    oChamber.oPump.turn_On();
+    oChamber.oPump.turn_Off();
+
+    ui16_Pressure_chamber_mmHg[0] = oChamber.oSensors.sense_ChamberPress_mmHg();
+    ui16_Pressure_chamber_mmHg[1] = oChamber.oSensors.sense_ChamberPress_mmHg();
+    ui16_Pressure_chamber_mmHg[2] = oChamber.oSensors.sense_ChamberPress_mmHg();
+    ui16_Pressure_chamber_mmHg[3] = oChamber.oSensors.sense_ChamberPress_mmHg();
+    ui16_Pressure_chamber_mmHg[4] = oChamber.oSensors.sense_ChamberPress_mmHg();
+*/
+
     oLED_Dbg.off_Red();
 
 }

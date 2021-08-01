@@ -35,6 +35,7 @@
 #include "Timers.h"
 #include "ISR_mgr.h"
 
+#include "Chamber.h"
 
 //.............................................................................
 extern "C" {
@@ -46,6 +47,9 @@ interrupt void IRQ_Vector_Timer0();
 class cl_isr_timer0 : public cl_isr_base{
 public:
     cl_led_dbg_rgb oLED_Dbg;
+    cl_chamber oChamber;
+    cl_sensors oSensors;
+//    cl_pump oPump;
 
     cl_isr_timer0(); //Ctor
     virtual void exec_isr(int iUsrID);

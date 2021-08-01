@@ -153,15 +153,30 @@ int main(void){
     oChamber.en_State_maintain_pressure = en_S2_PumpOn_mp; //restore sm for test
     oChamber.st_SMF_maintain_pressure.bF_req_Abort = false;
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
-    assert(oChamber.en_State_maintain_pressure == en_S1_Decide_mp);
+    assert(oChamber.en_State_maintain_pressure == en_S2_PumpOn_mp);
     assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 5);
+    assert(oChamber.u16_DnCnt_Delay == 4);
+
+    //-- en_S2_PumpOn_mp,    //S2->S1   [S1|S4]
+    ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
+    assert(oChamber.en_State_maintain_pressure == en_S2_PumpOn_mp);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 6);
+    assert(oChamber.u16_DnCnt_Delay == 3);
+
+    //-- en_S2_PumpOn_mp,    //S2->S1   [S1|S4]
+    oChamber.u16_DnCnt_Delay = 0;
+    ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
+    assert(oChamber.en_State_maintain_pressure == en_S1_Decide_mp);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 7);
+    assert(oChamber.u16_DnCnt_Delay == 0);
+
 
     //-- en_S2_PumpOn_mp,    //S2->S4   [S1|S4]
     oChamber.en_State_maintain_pressure = en_S2_PumpOn_mp; //restore sm for test
     oChamber.st_SMF_maintain_pressure.bF_req_Abort = true;
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
     assert(oChamber.en_State_maintain_pressure == en_S4_WrapUp_mp);
-    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 6);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 8);
 
 
     //-- en_S3_PumpOff_mp,   //S3->S1   [S1|S4]
@@ -169,21 +184,21 @@ int main(void){
     oChamber.st_SMF_maintain_pressure.bF_req_Abort = false;
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
     assert(oChamber.en_State_maintain_pressure == en_S1_Decide_mp);
-    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 7);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 9);
 
     //-- en_S3_PumpOff_mp,   //S3->S4   [S1|S4]
     oChamber.en_State_maintain_pressure = en_S3_PumpOff_mp; //restore sm for test
     oChamber.st_SMF_maintain_pressure.bF_req_Abort = true;
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
     assert(oChamber.en_State_maintain_pressure == en_S4_WrapUp_mp);
-    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 8);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 10);
 
 
     //-- en_S4_WrapUp_mp,    //S4->S5
     oChamber.st_SMF_maintain_pressure.bF_req_Abort = true;
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
     assert(oChamber.en_State_maintain_pressure == en_S5_Idle_mp);
-    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 9);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 11);
     assert(oChamber.st_SMF_maintain_pressure.bF_Run == false);
     assert(oChamber.st_SMF_maintain_pressure.bF_req_Abort == false);
 
@@ -191,13 +206,13 @@ int main(void){
     //-- en_S5_Idle_mp       //S5.
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
     assert(oChamber.en_State_maintain_pressure == en_S5_Idle_mp);
-    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 9);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 11); //Sm has stopped executing
 
 
     //-- en_S5_Idle_mp       //S5.
     ui32_SM_Cycle_cnt = oChamber.exec_sm_maintain_Pressure_at_SetPt_mmHg();
     assert(oChamber.en_State_maintain_pressure == en_S5_Idle_mp);
-    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 9);
+    assert(oChamber.ui32_CntCyc_SM_maintain_pressure == 11);
     //----- End Test sm maintain pressure
 
 

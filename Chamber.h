@@ -20,6 +20,7 @@
 //..... Limits.................................................................
 #define MAX_Pressure_chamber_mmHg (80)
 #define MAX_Duration_run_s (3600) //1 hour
+#define DNCNT_DELAY 1   //Delay by downcounting ISR; to reduce on-duration for pump
 //.............................................................................
 
 //.............................................................................
@@ -51,6 +52,9 @@ private:
     static uint32_t ui32_CntCyc_SM_decr_pressure;
     static uint32_t ui32_CntCyc_SM_pump_dur;
     static uint32_t ui32_CntCyc_SM_exhaust_dur;
+
+    //todo
+    static uint16_t u16_DnCnt_Delay;
 protected:
 public:
     //----- Imported Objects

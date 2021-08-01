@@ -23,6 +23,8 @@ uint32_t cl_chamber::ui32_CntCyc_SM_exhaust_dur;
 //----- SM State Vars
 en_state_maintain_pressure_t cl_chamber::en_State_maintain_pressure;
 //-- Vars
+uint16_t cl_chamber::u16_DnCnt_Delay;
+
 uint16_t cl_chamber::ui16_SetPt_mmHg;
 uint16_t cl_chamber::ui16_Thresh_mmHg;
 uint32_t cl_chamber::ui32_Dur_ms;
@@ -44,6 +46,7 @@ cl_chamber::cl_chamber(){ //Ctor
     //-- Vars
     ui16_SetPt_mmHg = 30;
     ui16_Curr_Pressure_mmHg = oSensors.sense_ChamberPress_mmHg();
+    u16_DnCnt_Delay = DNCNT_DELAY;
 }
 //::cc-------------------------------------------------------------------------
 
@@ -122,6 +125,7 @@ uint32_t cl_chamber::exec_sm_maintain_Pressure_at_SetPt_mmHg(){
 
         case en_S1_Decide_mp:    //S1->S2|S3|S4
             if (ui16_Curr_Pressure_mmHg < ui16_SetPt_mmHg){
+                u16_DnCnt_Delay = DNCNT_DELAY;
                 oPump.turn_On();
                 en_State_maintain_pressure = en_S2_PumpOn_mp; //-->change state S1->S2
             }else{
@@ -135,8 +139,13 @@ uint32_t cl_chamber::exec_sm_maintain_Pressure_at_SetPt_mmHg(){
             break;
 
         case en_S2_PumpOn_mp:    //S2->S1|S4
-            ui16_Curr_Pressure_mmHg = oSensors.sense_ChamberPress_mmHg();
-            en_State_maintain_pressure = en_S1_Decide_mp; //-->change state S2->S1
+            oPump.turn_Off();
+            if(u16_DnCnt_Delay > 0){
+                u16_DnCnt_Delay --;
+            }else{ //u16_DnCnt_Delay == 0
+                ui16_Curr_Pressure_mmHg = oSensors.sense_ChamberPress_mmHg();
+                en_State_maintain_pressure = en_S1_Decide_mp; //-->change state S2->S1
+            }
 
             if(st_SMF_maintain_pressure.bF_req_Abort){
                 oPump.turn_Off(); //redundant, precaution
