@@ -32,7 +32,7 @@
  * PA7 |p24|I2C2    |IO_Expander_SDA_PA7     |J1p10|
  * PA5 |p22|DI      |~Int_IO_Expander_PA5    |J1p8 |
  * ------------------------------------------------|
- * PE4 |p59|PWM2    |Drv_AirPump_PE4         |J1p5 |
+ * PE4 |p59|DO/PWM2 |Drv_AirPump_PE4         |J1p5 |
  * ------------------------------------------------|
  * PD0 |p61|SSI1_Clk|EEPROM_Clk_PD0          |J3p3 |
  * PD1 |p62|SSI1_FSS|EEPROM_FSS_PD1          |J3p4 |
@@ -140,6 +140,10 @@ protected:
     void drv_H_PD7(); //MCUp10
     void drv_L_PD7(); //MCUp10
     bool is_H_PD7(); //MCUp10
+
+    void drv_H_PE4(); //MCUp59
+    void drv_L_PE4(); //MCUp59
+    bool is_H_PE4(); //MCUp59
 
 public:
     cl_tm4c123gh6pm_pins(); //Ctor

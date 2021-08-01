@@ -32,7 +32,7 @@
  * PA7 |p24|I2C2    |IO_Expander_SDA_PA7     |J1p10|
  * PA5 |p22|DI      |~Int_IO_Expander_PA5    |J1p8 |
  * ------------------------------------------------|
- * PE4 |p59|PWM2    |Drv_AirPump_PE4         |J1p5 |
+ * PE4 |p59|DO/PWM2 |Drv_AirPump_PE4         |J1p5 |
  * ------------------------------------------------|
  * PD0 |p61|SSI1_Clk|EEPROM_Clk_PD0          |J3p3 |
  * PD1 |p62|SSI1_FSS|EEPROM_FSS_PD1          |J3p4 |
@@ -123,6 +123,10 @@ cl_tm4c123gh6pm_pins::cl_tm4c123gh6pm_pins(){
     MAP_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5); //PB5 |57 |DO      |Buzzer_PB5              |J1p2
     MAP_GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_6); //PD6 |53 |DO      |RS485_En_Rcv_PD6        |J4p8
 
+    //?? To be replaced with PWM? ??
+    //-- Setup DO for motor drive (assuming not using PWM)
+    MAP_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_4); //PE4 |59 |PWM2    |Drv_AirPump_PE4         |J1p5
+
     //-- DO for PD7: Unlock the Port Pin and Set the Commit Bit
     HWREG(GPIO_PORTD_BASE+GPIO_O_LOCK) = GPIO_LOCK_KEY;
     HWREG(GPIO_PORTD_BASE+GPIO_O_CR)   |= GPIO_PIN_7;
@@ -142,9 +146,11 @@ cl_tm4c123gh6pm_pins::cl_tm4c123gh6pm_pins(){
 
 
 
+/*
     //----- Configure GPIO Pins for PWM2
     MAP_GPIOPinConfigure(GPIO_PE4_M1PWM2);              //PE4 |59 |PWM2    |Drv_AirPump_PE4         |J1p5
     MAP_GPIOPinTypePWM(GPIO_PORTE_BASE, GPIO_PIN_4);
+*/
 
 
 
@@ -163,7 +169,7 @@ cl_tm4c123gh6pm_pins::cl_tm4c123gh6pm_pins(){
 
 
 
-    //----- Configure GPIO Pins for
+    //----- Configure GPIO Pins for UART3
     MAP_GPIOPinConfigure(GPIO_PC6_U3RX);                //PC6 |14 |U3Rx    |UART_Rx_PC6             |J4p6
     MAP_GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_6);
 
@@ -229,7 +235,6 @@ bool cl_tm4c123gh6pm_pins::read_DI_PA5(){ //MCUp22
 //----- Digital outputs
 //-- DO PB1
 //::---------------------------------------------------------------------------
-//::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_H_PB1(){ //MCUp46
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_1, GPIO_PIN_1);
 }
@@ -243,51 +248,8 @@ bool cl_tm4c123gh6pm_pins::is_H_PB1(){ //MCUp46
 }
 //::---------------------------------------------------------------------------
 
-bool cl_tm4c123gh6pm_pins::is_H_PB6(){ //MCUp1
-    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_6);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PE1(){ //MCUp8
-    return GPIOPinRead(GPIO_PORTE_BASE, GPIO_PIN_1);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PC4(){ //MCUp16
-    return GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_4);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PC5(){ //MCUp15
-    return GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_5);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PF1(){ //MCUp29
-    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PF2(){ //MCUp30
-    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PF3(){ //MCUp31
-    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_3);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PB5(){ //MCUp57
-    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PD6(){ //MCUp53
-    return GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_6);
-}
-//::---------------------------------------------------------------------------
-bool cl_tm4c123gh6pm_pins::is_H_PD7(){ //MCUp10
-    return GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_7);
-}
-//::---------------------------------------------------------------------------
-
-
 
 //-- DO PB6
-//::---------------------------------------------------------------------------
 //::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_H_PB6(){ //MCUp1
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
@@ -295,6 +257,10 @@ void cl_tm4c123gh6pm_pins::drv_H_PB6(){ //MCUp1
 //::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_L_PB6(){ //MCUp1
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PB6(){ //MCUp1
+    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_6);
 }
 //::---------------------------------------------------------------------------
 
@@ -308,6 +274,10 @@ void cl_tm4c123gh6pm_pins::drv_L_PE1(){ //MCUp8
     GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_1, 0);
 }
 //::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PE1(){ //MCUp8
+    return GPIOPinRead(GPIO_PORTE_BASE, GPIO_PIN_1);
+}
+//::---------------------------------------------------------------------------
 
 //-- DO PC4
 //::---------------------------------------------------------------------------
@@ -317,6 +287,10 @@ void cl_tm4c123gh6pm_pins::drv_H_PC4(){ //MCUp16
 //::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_L_PC4(){ //MCUp16
     GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_4, 0);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PC4(){ //MCUp16
+    return GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_4);
 }
 //::---------------------------------------------------------------------------
 
@@ -330,6 +304,10 @@ void cl_tm4c123gh6pm_pins::drv_L_PC5(){ //MCUp15
     GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);
 }
 //::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PC5(){ //MCUp15
+    return GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_5);
+}
+//::---------------------------------------------------------------------------
 
 //-- DO PF1
 //::---------------------------------------------------------------------------
@@ -339,6 +317,10 @@ void cl_tm4c123gh6pm_pins::drv_H_PF1(){ //MCUp29
 //::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_L_PF1(){ //MCUp29
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PF1(){ //MCUp29
+    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1);
 }
 //::---------------------------------------------------------------------------
 
@@ -352,6 +334,10 @@ void cl_tm4c123gh6pm_pins::drv_L_PF2(){ //MCUp30
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
 }
 //::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PF2(){ //MCUp30
+    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2);
+}
+//::---------------------------------------------------------------------------
 
 //-- DO PF3
 //::---------------------------------------------------------------------------
@@ -361,6 +347,10 @@ void cl_tm4c123gh6pm_pins::drv_H_PF3(){ //MCUp31
 //::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_L_PF3(){ //MCUp31
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PF3(){ //MCUp31
+    return GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_3);
 }
 //::---------------------------------------------------------------------------
 
@@ -375,6 +365,10 @@ void cl_tm4c123gh6pm_pins::drv_L_PB5(){ //MCUp57
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_5, 0);
 }
 //::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PB5(){ //MCUp57
+    return GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5);
+}
+//::---------------------------------------------------------------------------
 
 //-- DO PD6
 //::---------------------------------------------------------------------------
@@ -386,6 +380,10 @@ void cl_tm4c123gh6pm_pins::drv_L_PD6(){ //MCUp53
     GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_6, 0);
 }
 //::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PD6(){ //MCUp53
+    return GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_6);
+}
+//::---------------------------------------------------------------------------
 
 //-- DO PD7
 //::---------------------------------------------------------------------------
@@ -395,6 +393,25 @@ void cl_tm4c123gh6pm_pins::drv_H_PD7(){ //MCUp10
 //::---------------------------------------------------------------------------
 void cl_tm4c123gh6pm_pins::drv_L_PD7(){ //MCUp10
     GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_7, 0);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PD7(){ //MCUp10
+    return GPIOPinRead(GPIO_PORTD_BASE, GPIO_PIN_7);
+}
+//::---------------------------------------------------------------------------
+
+//-- DO PE4
+//::---------------------------------------------------------------------------
+void cl_tm4c123gh6pm_pins::drv_H_PE4(){ //MCUp59
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_4, GPIO_PIN_4);
+}
+//::---------------------------------------------------------------------------
+void cl_tm4c123gh6pm_pins::drv_L_PE4(){ //MCUp59
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_4, 0);
+}
+//::---------------------------------------------------------------------------
+bool cl_tm4c123gh6pm_pins::is_H_PE4(){ //MCUp59
+    return GPIOPinRead(GPIO_PORTE_BASE, GPIO_PIN_4);
 }
 //::---------------------------------------------------------------------------
 
